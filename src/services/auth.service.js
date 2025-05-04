@@ -8,7 +8,8 @@ import User from "../models/User.js";
 // import crypto from "node:crypto"; // Не используется
 
 // Импортируем константы, добавляя .js в конце пути
-import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js'; // <-- ИЗМЕНЕНИЕ ЗДЕСЬ
+// import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js'; // <-- ИЗМЕНЕНИЕ ЗДЕСЬ
+import { TWO_HOURS, ONE_DAY } from '../constants/index.js';
 
 // eslint-disable-next-line no-unused-vars
 import dotenv from 'dotenv';
@@ -48,7 +49,8 @@ export async function loginUser(email, password) {
   const accessToken = jwt.sign(
     payload,
     process.env.JWT_SECRET,
-    { expiresIn: '15m' }
+    // { expiresIn: '15m' }
+    { expiresIn: '2h' }
   );
 
   const refreshToken = jwt.sign(
@@ -63,7 +65,8 @@ export async function loginUser(email, password) {
     userId: user._id,
     accessToken: accessToken,
     refreshToken: refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    // accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    accessTokenValidUntil: new Date(Date.now() + TWO_HOURS),
     refreshTokenValidUntil: new Date(Date.now() + ONE_DAY * 7),
   });
 
